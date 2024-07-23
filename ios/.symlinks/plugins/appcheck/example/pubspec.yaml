@@ -1,0 +1,25 @@
+name: appcheck_example
+description: Flutter plugin that allows you to check if an app is installed/enabled, launch an app and get the list of installed apps.
+
+publish_to: "none"
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  appcheck:
+    path: ../
+
+  cupertino_icons: ^1.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true

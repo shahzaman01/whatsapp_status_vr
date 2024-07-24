@@ -22,23 +22,37 @@ class StatusesNotifier
 
   Future<List<String>> getStatuses() async {
     if (arg == StatusTabType.recent) {
+
       final androidInfo = await ref.watch(androidInfoProvider.future);
       List<String> statusesDirAllFiles;
       final recentStatusesNotifier =
-          ref.read(recentStoragePermissionProvider.notifier);
+      ref.read(recentStoragePermissionProvider.notifier);
       if (androidInfo.isAndroid11OrLater) {
         statusesDirAllFiles =
-            await getStatusesDirFilesFromSaf(recentStatusesNotifier.saf()!);
+        await getStatusesDirFilesFromSaf(recentStatusesNotifier.saf()!);
       } else {
+
+        debugPrint('android version 10 or below');
+        // final directory = Directory(recentStatusesNotifier.statusesPath()!);
+        //
+        //
+        // if (await directory.exists()) {
+        //   debugPrint('Directory contents:');
+        //   await for (var entity in directory.list()) {
+        //     debugPrint(entity.path);
+        //   }}
         statusesDirAllFiles = getDirectoryFilePaths(
           recentStatusesNotifier.statusesPath()!,
           whereCallback: isItStatusFile,
         );
+        debugPrint('statusesDirAllFiles${statusesDirAllFiles}');
+        debugPrint('statuses path${recentStatusesNotifier.statusesPath()!}');
       }
+      debugPrint('statusesDirAllFiles${statusesDirAllFiles.where(isItStatusFile).toList()}');
       return statusesDirAllFiles.where(isItStatusFile).toList();
     } else if (arg == StatusTabType.saved) {
       final savedStatusesNotifier =
-          ref.read(savedStoragePermissionProvider.notifier);
+      ref.read(savedStoragePermissionProvider.notifier);
       return getDirectoryFilePaths(
         savedStatusesNotifier.statusesPath()!,
         whereCallback: isItStatusFile,

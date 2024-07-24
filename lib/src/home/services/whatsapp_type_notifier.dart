@@ -24,10 +24,11 @@ class WhatsAppTypeNotifier extends AsyncNotifier<WhatsAppType?> {
     }
     return null;
   }
+  final appCheck = AppCheck();
 
   Future<AppInfo?> _checkAppAvailability(String package) async {
     try {
-      final app = await AppCheck.checkAvailability(package);
+      final app = await appCheck.checkAvailability(package);
       return app;
     } on PlatformException catch (e) {
       if (e.code == '400' && e.message?.contains('App not found') == true) {

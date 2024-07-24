@@ -103,10 +103,11 @@ class StoragePermissionNotifier
   }
 
   Future<String> _getStatusesDirPath() async {
+    final androidInfo = await ref.watch(androidInfoProvider.future);
     if (arg == StatusTabType.recent) {
       return getStatusesPath(
         (await ref.read(whatsAppTypeProvider.future))!,
-        (await ref.read(androidInfoProvider.future)).isAndroid11OrLater,
+        androidInfo.isAndroid11OrLater,
       );
     } else if (arg == StatusTabType.saved) {
       return savedStatusesDirectory;
